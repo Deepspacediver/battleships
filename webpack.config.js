@@ -25,6 +25,16 @@ module.exports = {
         type: "asset/resource",
         exclude: /node_modules/,
       },
+      {
+        test: /\.m?js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+          },
+        },
+      },
     ],
   },
 };
