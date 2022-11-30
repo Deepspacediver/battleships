@@ -4,15 +4,15 @@ describe("ship methods", () => {
   let myShip;
   let shipDescription = {
     length: 3,
-    name: "Cruiser",
+    name: "cruiser",
   };
   beforeEach(() => {
-    myShip = Ship(shipDescription);
+    myShip = Ship(shipDescription.length, shipDescription.name);
   });
 
   test("properply creates ship", () => {
     expect(myShip.getLength()).toBe(3);
-    expect(myShip.getName()).toBe("Cruiser");
+    expect(myShip.getName()).toBe("cruiser");
   });
 
   test("ship's hit method increases by one", () => {
@@ -35,4 +35,3 @@ describe("ship methods", () => {
     myShip.hit();
     expect(myShip.isSunk()).toBe(true);
   });
-});
