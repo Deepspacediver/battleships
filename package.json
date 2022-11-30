@@ -36,6 +36,7 @@
     "webpack-cli": "^5.0.0"
   },
   "dependencies": {
-    "eslint-plugin-jest": "^27.1.6"
+    "eslint-plugin-jest": "^27.1.6",
+    "lodash.isequal": "^4.5.0"
   }
 }
