@@ -1,4 +1,3 @@
-import Ship from "../modules/battleship-factory";
 import Gameboard from "../modules/gameboard";
 
 let myGameboard;
@@ -67,7 +66,7 @@ describe("coordinations", () => {
   });
 });
 
- describe("receiveAttack function", () => {
+describe("receiveAttack function", () => {
   beforeEach(() => {
     myGameboard = Gameboard();
     myGameboard.placeShip(2, "destroyer", [
@@ -86,20 +85,55 @@ describe("coordinations", () => {
       [5, 5],
     ]);
   });
-  test("increases battleship's hitsTaken" , () =>{
-    myGameboard.receiveAttack([5,3])
-    expect(myGameboard.shipList[2].ship.getHitsTaken()).toBe(1)
+  
+  test("increases battleship's hitsTaken", () => {
+    myGameboard.receiveAttack([5, 3]);
+    expect(myGameboard.shipList[2].ship.getHitsTaken()).toBe(1);
   });
 
-  test("sinks battleship" , () =>{
-    myGameboard.receiveAttack([5,2])
-    myGameboard.receiveAttack([5,3])
-    myGameboard.receiveAttack([5,4])
-    myGameboard.receiveAttack([5,5])
-    expect(myGameboard.shipList[2].ship.isSunk()).toBe(true)
+  test("sinks battleship", () => {
+    myGameboard.receiveAttack([5, 2]);
+    myGameboard.receiveAttack([5, 3]);
+    myGameboard.receiveAttack([5, 4]);
+    myGameboard.receiveAttack([5, 5]);
+    expect(myGameboard.shipList[2].ship.isSunk()).toBe(true);
   });
-  test("adds missed shots to a set" , () =>{
-    myGameboard.receiveAttack([9,9])
-    expect(myGameboard.missedShots.has(String([9,9]))).toBe(true)
+  test("adds missed shots to a set", () => {
+    myGameboard.receiveAttack([9, 9]);
+    expect(myGameboard.missedShots.has(String([9, 9]))).toBe(true);
+  });
+});
+
+describe("areAllSunk testing", () => {
+  beforeEach(() => {
+    myGameboard = Gameboard();
+    myGameboard.placeShip(2, "destroyer", [
+      [1, 2],
+      [1, 3],
+    ]);
+    myGameboard.placeShip(2, "destroyer2", [
+      [3, 2],
+      [3, 3],
+    ]);
+    myGameboard.placeShip(2, "destroyer3", [
+      [5, 2],
+      [5, 3],
+    ]);
+  });
+  test("returns true if all ships are sunk", () => {
+    myGameboard.shipList[0].ship.hit()
+    myGameboard.shipList[0].ship.hit()
+    myGameboard.shipList[1].ship.hit()
+    myGameboard.shipList[1].ship.hit()
+    myGameboard.shipList[2].ship.hit()
+    myGameboard.shipList[2].ship.hit()
+
+    expect(myGameboard.areAllSunk()).toBe(true)
+  });
+
+  test("returns false if they are not sunk", () => {
+    myGameboard.shipList[0].ship.hit()
+    myGameboard.shipList[2].ship.hit()
+    expect(myGameboard.areAllSunk()).toBe(false)
   });
 });

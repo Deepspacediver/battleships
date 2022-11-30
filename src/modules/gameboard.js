@@ -5,7 +5,7 @@ import Ship from "./battleship-factory";
 const Gameboard = () => {
   const board = Array.from({ length: 10 }, () => Array.from({ length: 10 }));
   const shipList = [];
-  const missedShots = new Set()
+  const missedShots = new Set();
   const placeShip = (length, name, coordinates) => {
     const shipObject = {
       ship: Ship(length, name),
@@ -15,9 +15,9 @@ const Gameboard = () => {
   };
 
   const receiveAttack = (coordinate) => {
-    const indexOfShip = seeIfOnBoard(coordinate)
-    if(indexOfShip!== undefined) shipList[indexOfShip].ship.hit()
-    else missedShots.add(String(coordinate))
+    const indexOfShip = seeIfOnBoard(coordinate);
+    if (indexOfShip !== undefined) shipList[indexOfShip].ship.hit();
+    else missedShots.add(String(coordinate));
   };
 
   const seeIfOnBoard = (coordinate) => {
@@ -28,7 +28,9 @@ const Gameboard = () => {
     }
   };
 
-  return { board, shipList, placeShip, receiveAttack, missedShots };
+  const areAllSunk = () => shipList.every((el) => el.ship.isSunk());
+
+  return { board, shipList, placeShip, receiveAttack, missedShots, areAllSunk };
 };
 
 export default Gameboard;
