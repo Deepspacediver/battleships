@@ -1,15 +1,15 @@
 Battleship game written with TDD. 
 
-Gameboard is an array of 100 length (10 by 10)
+Gameboard is a 2d array of in total 100 positions. 
 
 1.Gameboard places 5 ships of sizes 2,3,3,4,5
-a)Create ships with length,  assign correspodning name it base on the length store them in the gameboard class/factory
+a)Create ships with length,  assign correspodning name to it based on the length, store them in an array of objects in the gameboard class/factory
 
-b)When gameboard places ship in the DOM add to ships name to the corresponding indexes of parentNode.children to the gameboard array
+b)When gameboard places ship in the DOM, store in an object coordinates of a ship
 
-c)when user click a square, check index of NodeList with gameBoard array and check if ship is in there, 
--if the ship is in the array, ship.hit() and check if it is sunk
-if the ship is sunk 
+c)when user click a square, check object with ships if there was a hit
+-if the ship was hit, ship.hit() and check if it is sunk, store a hit coordinate in a Set
+-if there was no hit, store hit coordinate in a Set
 
 
 <!-- const indexOfChild = Array.from(e.target.parentNode.children).indexOf(e.target) -->
