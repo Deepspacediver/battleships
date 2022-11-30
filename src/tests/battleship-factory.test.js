@@ -35,3 +35,4 @@ describe("ship methods", () => {
     myShip.hit();
     expect(myShip.isSunk()).toBe(true);
   });
+})
