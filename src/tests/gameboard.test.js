@@ -44,7 +44,7 @@ describe("coordinations", () => {
     [1, 3],
     [1, 4],
   ];
-  beforeEach(() => {
+  beforeAll(() => {
     myGameboard = Gameboard();
     myGameboard.placeShip(
       shipDescription.length,
@@ -64,5 +64,42 @@ describe("coordinations", () => {
     expect(myGameboard.shipList[0].coordinates.length).toStrictEqual(
       shipLength
     );
+  });
+});
+
+ describe("receiveAttack function", () => {
+  beforeEach(() => {
+    myGameboard = Gameboard();
+    myGameboard.placeShip(2, "destroyer", [
+      [1, 2],
+      [1, 3],
+    ]);
+    myGameboard.placeShip(3, "submarine", [
+      [3, 2],
+      [3, 3],
+      [3, 4],
+    ]);
+    myGameboard.placeShip(4, "battleship", [
+      [5, 2],
+      [5, 3],
+      [5, 4],
+      [5, 5],
+    ]);
+  });
+  test("increases battleship's hitsTaken" , () =>{
+    myGameboard.receiveAttack([5,3])
+    expect(myGameboard.shipList[2].ship.getHitsTaken()).toBe(1)
+  });
+
+  test("sinks battleship" , () =>{
+    myGameboard.receiveAttack([5,2])
+    myGameboard.receiveAttack([5,3])
+    myGameboard.receiveAttack([5,4])
+    myGameboard.receiveAttack([5,5])
+    expect(myGameboard.shipList[2].ship.isSunk()).toBe(true)
+  });
+  test("adds missed shots to a set" , () =>{
+    myGameboard.receiveAttack([9,9])
+    expect(myGameboard.missedShots.has(String([9,9]))).toBe(true)
   });
 });
