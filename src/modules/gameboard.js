@@ -16,8 +16,11 @@ const Gameboard = () => {
 
   const receiveAttack = (coordinate) => {
     const indexOfShip = seeIfOnBoard(coordinate);
-    if (indexOfShip !== undefined) shipList[indexOfShip].ship.hit();
-    else missedShots.add(String(coordinate));
+    if (indexOfShip !== undefined) {
+      const shipInList = shipList[indexOfShip];
+      shipInList.ship.hit();
+      if (shipInList.ship.isSunk()) return shipInList;
+    } else missedShots.add(String(coordinate));
   };
 
   const seeIfOnBoard = (coordinate) => {

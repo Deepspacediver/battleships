@@ -85,7 +85,7 @@ describe("receiveAttack function", () => {
       [5, 5],
     ]);
   });
-  
+
   test("increases battleship's hitsTaken", () => {
     myGameboard.receiveAttack([5, 3]);
     expect(myGameboard.shipList[2].ship.getHitsTaken()).toBe(1);
@@ -98,6 +98,15 @@ describe("receiveAttack function", () => {
     myGameboard.receiveAttack([5, 5]);
     expect(myGameboard.shipList[2].ship.isSunk()).toBe(true);
   });
+
+  test("receiveAttack returns shipObject if it was sunk", () => {
+    myGameboard.receiveAttack([5, 2]);
+    myGameboard.receiveAttack([5, 3]);
+    expect(myGameboard.receiveAttack([5, 4])).toBeUndefined();
+    expect(myGameboard.receiveAttack([5, 5])).not.toBeUndefined();
+
+  });
+
   test("adds missed shots to a set", () => {
     myGameboard.receiveAttack([9, 9]);
     expect(myGameboard.missedShots.has(String([9, 9]))).toBe(true);
@@ -131,9 +140,12 @@ describe("areAllSunk testing", () => {
     expect(myGameboard.areAllSunk()).toBe(true)
   });
 
-  test("returns false if they are not sunk", () => {
+  test("returns false if only one ship is sunk", () => {
     myGameboard.shipList[0].ship.hit()
-    myGameboard.shipList[2].ship.hit()
+    myGameboard.shipList[0].ship.hit()
+    expect(myGameboard.shipList[0].ship.isSunk()).toBe(true)
     expect(myGameboard.areAllSunk()).toBe(false)
   });
+
+  
 });
