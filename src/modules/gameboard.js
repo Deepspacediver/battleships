@@ -19,8 +19,22 @@ const Gameboard = () => {
     if (indexOfShip !== undefined) {
       const shipInList = shipList[indexOfShip];
       shipInList.ship.hit();
-      if (shipInList.ship.isSunk()) return shipInList;
-    } else missedShots.add(String(coordinate));
+      if (shipInList.ship.isSunk())
+        return {
+          hit: true,
+          sunk: true,
+          name: shipInList.ship.getName(),
+        };
+      return {
+        hit: true,
+        sunk: false,
+      };
+    }
+    missedShots.add(String(coordinate));
+    return {
+      hit: false,
+      sunk: false,
+    };
   };
 
   const seeIfOnBoard = (coordinate) => {

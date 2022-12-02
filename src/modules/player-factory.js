@@ -1,17 +1,12 @@
-import Gameboard from "./gameboard"
+import Gameboard from "./gameboard";
 
 const Player = (name) => {
-  const getName = () => name
-  const board = Gameboard()
+  const getName = () => name;
+  const board = Gameboard();
 
-  const attack = (enemy, coordinate) => {
-    enemy.board.receiveAttack(coordinate)
-  }
+  const attack = (enemy, coordinate) => enemy.board.receiveAttack(coordinate);
 
-  return {getName, board, attack}
-}
+  return { getName, board, attack };
+};
 
-
-
-
-export default Player
+export default Player;

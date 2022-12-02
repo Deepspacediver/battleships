@@ -98,14 +98,33 @@ describe("receiveAttack function", () => {
     myGameboard.receiveAttack([5, 5]);
     expect(myGameboard.shipList[2].ship.isSunk()).toBe(true);
   });
+  
+  test("returns hit:false sunk:false when missed", () => {
+    
+    const resultOfAttack = myGameboard.receiveAttack([9, 9]);
+    expect(resultOfAttack.hit).toBe(false)
+    expect(resultOfAttack.sunk).toBe(false)
+  });
 
-  test("receiveAttack returns shipObject if it was sunk", () => {
+  test("returns hit:true sunk:false when player only hits the ship", () => {
     myGameboard.receiveAttack([5, 2]);
     myGameboard.receiveAttack([5, 3]);
-    expect(myGameboard.receiveAttack([5, 4])).toBeUndefined();
-    expect(myGameboard.receiveAttack([5, 5])).not.toBeUndefined();
+    const resultOfAttack = myGameboard.receiveAttack([5, 4])
+    expect(resultOfAttack.hit).toBe(true)
+    expect(resultOfAttack.sunk).toBe(false)
+  }); 
+
+  test("returns hit:true sunk:true and shipName when ship is sunk", () => {
+    myGameboard.receiveAttack([5, 2]);
+    myGameboard.receiveAttack([5, 3]);
+    myGameboard.receiveAttack([5, 5]);
+    const resultOfAttack = myGameboard.receiveAttack([5, 4])
+    expect(resultOfAttack.hit).toBe(true)
+    expect(resultOfAttack.sunk).toBe(true)
+    expect(resultOfAttack.name).toBe("battleship")
 
   });
+
 
   test("adds missed shots to a set", () => {
     myGameboard.receiveAttack([9, 9]);
@@ -130,22 +149,20 @@ describe("areAllSunk testing", () => {
     ]);
   });
   test("returns true if all ships are sunk", () => {
-    myGameboard.shipList[0].ship.hit()
-    myGameboard.shipList[0].ship.hit()
-    myGameboard.shipList[1].ship.hit()
-    myGameboard.shipList[1].ship.hit()
-    myGameboard.shipList[2].ship.hit()
-    myGameboard.shipList[2].ship.hit()
+    myGameboard.shipList[0].ship.hit();
+    myGameboard.shipList[0].ship.hit();
+    myGameboard.shipList[1].ship.hit();
+    myGameboard.shipList[1].ship.hit();
+    myGameboard.shipList[2].ship.hit();
+    myGameboard.shipList[2].ship.hit();
 
-    expect(myGameboard.areAllSunk()).toBe(true)
+    expect(myGameboard.areAllSunk()).toBe(true);
   });
 
   test("returns false if only one ship is sunk", () => {
-    myGameboard.shipList[0].ship.hit()
-    myGameboard.shipList[0].ship.hit()
-    expect(myGameboard.shipList[0].ship.isSunk()).toBe(true)
-    expect(myGameboard.areAllSunk()).toBe(false)
+    myGameboard.shipList[0].ship.hit();
+    myGameboard.shipList[0].ship.hit();
+    expect(myGameboard.shipList[0].ship.isSunk()).toBe(true);
+    expect(myGameboard.areAllSunk()).toBe(false);
   });
-
-  
 });
