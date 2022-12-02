@@ -12,4 +12,18 @@ c)when user click a square, check object with ships if there was a hit
 -if there was no hit, store hit coordinate in a Set
 
 
+Game loop:
+Create player with a name  using input
+Show HTML gameboard with draggable ships
+CReate ships based on placement in the DOM inside player's board(Each time player drags a ship player.board.placeShip())
+
+Gameplay:
+define playerTurn
+playerTurn initial value points to player1
+if player1 turn  addeventlistener to enemyboard which passes event values into player1.attack(enemy, coordinate)
+-if player1.attack value returns hit:false ti was a miss
+-if returns hit:true sunk false it was only a hit
+-if returns hit:true sunk:true ship was sunk, alert name of sunk ship/mark a sunk ship within DOM
+add either hit/missed class to the DOM square
+
 <!-- const indexOfChild = Array.from(e.target.parentNode.children).indexOf(e.target) -->
