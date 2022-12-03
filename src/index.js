@@ -1,2 +1,5 @@
+import "./style.css"
+import "./DOM/createBoardDOM"
+import "./modules/gameHandler"
 import "./modules/battleship-factory"
 import "./modules/gameboard"
