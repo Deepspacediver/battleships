@@ -28,12 +28,14 @@ const Gameboard = () => {
       return {
         hit: true,
         sunk: false,
+        name: null,
       };
     }
     missedShots.add(String(coordinate));
     return {
       hit: false,
-      sunk: false,
+        sunk: false,
+        name: null,
     };
   };
 
