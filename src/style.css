@@ -21,7 +21,10 @@ main{
 .square {
   border: 1px solid black;
 }
-
+.active > div:hover {
+  background-color: purple;
+  cursor: pointer;
+}
 .missed {
   background-color: grey;
 }

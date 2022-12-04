@@ -60,6 +60,7 @@ const gameHandler = (playerName) => {
   };
 
   const playerMove = (event) => {
+    AIBoardDOM.classList.remove("active");
     const playerTarget = convertToCoordinate(event.target);
     const playerAttack = players.realPlayer.attack(players.AI, playerTarget);
     displayAttackResult(playerAttack, getTurn());
@@ -69,32 +70,37 @@ const gameHandler = (playerName) => {
   };
 
   const AIMove = () => {
+    if (players.AI.board.areAllSunk()) return;
     const AITarget = getValidAttack(AIPossibleAttacks);
     const AIAttack = players.AI.attack(players.realPlayer, AITarget);
+
     setTimeout(() => {
       markSquare(AITarget, AIAttack, getTurn());
-    }, 1000);
+    }, 500);
+
     setTimeout(() => {
       displayAttackResult(AIAttack, getTurn());
       endGame();
-    }, 1200);
+    }, 700);
 
-    setTimeout(changeTurn, 1300);
+    setTimeout(() => {
+      changeTurn();
+      AIBoardDOM.classList.add("active");
+    }, 850);
   };
 
-  const intializeAttack = () => {
-    AIBoardDOM.addEventListener("click", (e) => {
-      if (
-        e.target.classList.contains("missed") ||
-        e.target.classList.contains("hit") ||
-        getTurn() === "ai" ||
-        players.AI.board.areAllSunk() ||
-        players.realPlayer.board.areAllSunk()
-      )
-        return;
-      playerMove(e);
-      AIMove();
-    });
+  const intializeAttack = (e) => {
+    if (
+      e.target.classList.contains("missed") ||
+      e.target.classList.contains("hit") ||
+      getTurn() === "ai" ||
+      players.AI.board.areAllSunk() ||
+      players.realPlayer.board.areAllSunk()
+    )
+      return;
+
+    playerMove(e);
+    AIMove();
   };
 
   const isGameOver = (turn) =>
@@ -104,51 +110,15 @@ const gameHandler = (playerName) => {
 
   const endGame = () => {
     // Implement modal to pop up instead of alter
-    if (isGameOver(getTurn())) alert(`${getTurn()} has won!`);
+    if (isGameOver(getTurn())) {
+      alert(`${getTurn()} has won!`);
+    }
   };
 
   return {
-    getTurn,
-    playerTurn,
-    changeTurn,
     intializeAttack,
     players,
   };
 };
 
-let myGameHandler = gameHandler();
-myGameHandler.players.AI.board.placeShip(2, "destroyer", [
-  [1, 2],
-  [1, 3],
-]);
-myGameHandler.players.AI.board.placeShip(3, "submarine", [
-  [3, 2],
-  [3, 3],
-  [3, 4],
-]);
-myGameHandler.players.AI.board.placeShip(4, "battleship", [
-  [5, 2],
-  [5, 3],
-  [5, 4],
-  [5, 5],
-]);
-myGameHandler.players.realPlayer.board.placeShip(2, "destroyer", [
-  [2, 2],
-  [2, 3],
-]);
-myGameHandler.players.realPlayer.board.placeShip(3, "submarine", [
-  [4, 2],
-  [4, 3],
-  [4, 4],
-]);
-myGameHandler.players.realPlayer.board.placeShip(4, "battleship", [
-  [6, 2],
-  [6, 3],
-  [6, 4],
-  [6, 5],
-]);
-myGameHandler.intializeAttack();
-playerBoardDOM.addEventListener("click", () => {
-  myGameHandler.changeTurn();
-});
 export default gameHandler;
