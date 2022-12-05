@@ -2,6 +2,7 @@ import Player from "./player-factory";
 import possibleAttacks, {
   getValidAttack,
 } from "../gameHelpers/AI-possible-attacks";
+import isEqual from "lodash.isequal";
 
 const playerBoardDOM = document.getElementById("player-board");
 const AIBoardDOM = document.getElementById("ai-board");
@@ -13,6 +14,83 @@ const gameHandler = (playerName) => {
     realPlayer: Player(playerName),
     AI: Player("AI"),
   };
+
+  // Ship placement
+  let illegalShipPlacements = [];
+
+  // Check if y axis is out of bounds
+  const isOutOfBounds = (coordinate, shipLength) =>
+    coordinate[1] + shipLength > 10;
+
+  const generatePlacement = (coordinate, shipLength) => {
+    const shipPlacement = [];
+    for (let i = 0; i < shipLength; i++) {
+      shipPlacement.push([coordinate[0], coordinate[1] + i]);
+    }
+    return shipPlacement;
+  };
+
+  const illegalVariants = [
+    [0, -1],
+    [-1, -1],
+    [1, -1],
+    [-1, 0],
+    [1, 0],
+    [0, 1],
+    [-1, +1],
+    [1, 1],
+  ];
+
+  const isInAnArray = (array, element) =>
+    array.some((el) => isEqual(el, element));
+
+  const isInIllegalMoves = (shipPlacement, illegalMoves) => {
+    // eslint-disable-next-line no-restricted-syntax
+    for (const placement of shipPlacement) {
+      if (illegalMoves.some((el) => isEqual(el, placement))) return true;
+    }
+    return false;
+  };
+
+  const generateIllegalMoves = (coordinates, illegalPossibilites) => {
+    const illegalMoves = [];
+    console.log(coordinates);
+    coordinates.forEach((coord) => {
+      for (let i = 0; i < illegalPossibilites.length; i++) {
+        const illegalVariant = illegalPossibilites[i];
+        const illegalMove = [
+          coord[0] + illegalVariant[0],
+          coord[1] + illegalVariant[1],
+        ];
+        if (
+          illegalMove[0] >= 0 &&
+          illegalMove[0] <= 9 &&
+          illegalMove[1] >= 0 &&
+          illegalMove[1] <= 9 &&
+          isInAnArray(coordinates, illegalMove) === false
+        )
+          illegalMoves.push(illegalMove);
+      }
+    });
+    return illegalMoves.concat(coordinates);
+  };
+
+  const anchorAShip = (chosenCoordinate, shipData) => {
+    if (isOutOfBounds(chosenCoordinate, shipData.length)) return;
+    const shipPlacement = generatePlacement(chosenCoordinate, shipData.length);
+    if (isInIllegalMoves(shipPlacement, illegalShipPlacements)) return;
+
+    players.realPlayer.board.placeShip(
+      shipData.length,
+      shipData.name,
+      shipPlacement
+    );
+    const illegalMoves = generateIllegalMoves(shipPlacement, illegalVariants);
+    illegalShipPlacements = illegalShipPlacements.concat(illegalMoves);
+    return shipPlacement;
+  };
+
+  // Game loop
   const AIPossibleAttacks = possibleAttacks;
   const getTurn = () => playerTurn;
   const changeTurn = () => {
@@ -118,6 +196,7 @@ const gameHandler = (playerName) => {
   return {
     intializeAttack,
     players,
+    anchorAShip,
   };
 };
 
