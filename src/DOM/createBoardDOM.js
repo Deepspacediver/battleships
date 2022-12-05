@@ -2,6 +2,7 @@ import possibleAttacks from "../gameHelpers/AI-possible-attacks";
 
 const playerBoard = document.getElementById("player-board");
 const AIBoard = document.getElementById("ai-board");
+const boardForPlacement = document.getElementById("place-ship-board");
 
 
 const createBoards = (coordinates) => {
@@ -10,9 +11,11 @@ const createBoards = (coordinates) => {
     square.classList.add("square");
     square.dataset.x = coordinate[0];
     square.dataset.y = coordinate[1];
-    playerBoard.appendChild(square);
+    //playerBoard.appendChild(square);
     let squareClone = square.cloneNode();
-    AIBoard.appendChild(squareClone);
+    //AIBoard.appendChild(squareClone);
+    boardForPlacement.appendChild(squareClone);
+
   });
 };
 
