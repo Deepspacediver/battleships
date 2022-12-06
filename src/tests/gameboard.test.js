@@ -1,3 +1,4 @@
+import { illegalVariants } from "../gameHelpers/placement-helpers";
 import Gameboard from "../modules/gameboard";
 
 let myGameboard;
@@ -166,3 +167,4 @@ describe("areAllSunk testing", () => {
     expect(myGameboard.areAllSunk()).toBe(false);
   });
 });
+ 
