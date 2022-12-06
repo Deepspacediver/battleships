@@ -33,7 +33,18 @@ main{
   background-color: red;
 }
 
-
+.anchored {
+  background-color: green !important; 
+}
+.dragover{
+  background-color: purple;
+}
+.removed{
+  opacity: 0.2;
+}
+.outOfBounds{
+  background-color: gray;
+}
 #board-creator {
   display: grid;
   width: 80vw;
