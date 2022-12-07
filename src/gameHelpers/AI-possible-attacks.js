@@ -18,5 +18,15 @@ const getValidAttack = (attacksArray) =>
     .splice(Math.floor(Math.random() * attacksArray.length), 1)
     .flat();
 
+const convertInto2DArr = (arr) => {
+  const new2DArr = [];
+  while (arr.length) {
+    new2DArr.push(arr.splice(0, 10));
+  }
+  return new2DArr;
+};
+
+const myNew2D = convertInto2DArr([...possibleAttacks])
+console.log(possibleAttacks)
 export default possibleAttacks;
-export { getValidAttack };
+export { getValidAttack, myNew2D };

@@ -1,7 +1,8 @@
 /* eslint-disable no-restricted-syntax */
 import isEqual from "lodash.isequal";
+import { myNew2D } from "../gameHelpers/AI-possible-attacks";
 import Ship from "./battleship-factory";
-import { illegalVariants } from "../gameHelpers/placement-helpers";
+import { illegalVariants, shipArray } from "../gameHelpers/placement-helpers";
 
 const Gameboard = () => {
   const board = Array.from({ length: 10 }, () => Array.from({ length: 10 }));
@@ -36,8 +37,7 @@ const Gameboard = () => {
       }
       illegalSet.add(String(coord));
     });
-    console.log(illegalSet)
-
+    console.log(illegalSet);
   };
 
   const placeShip = (length, name, coordinates) => {
@@ -84,8 +84,16 @@ const Gameboard = () => {
 
   const areAllSunk = () => shipList.every((el) => el.ship.isSunk());
 
+  // AI random ship placement
+  const allCoordinates = [...myNew2D];
+
+  const getRandomIndex = (indexArray) =>
+    indexArray.splice(Math.floor(Math.random() * indexArray.length), 1);
+
+  const getRandomShip = (shipCollectionHelper) =>
+    shipCollectionHelper[getRandomIndex()];
+
   return {
-    board,
     shipList,
     placeShip,
     receiveAttack,

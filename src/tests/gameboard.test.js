@@ -1,4 +1,5 @@
 import { illegalVariants } from "../gameHelpers/placement-helpers";
+import possibleAttacks from "../gameHelpers/AI-possible-attacks";
 import Gameboard from "../modules/gameboard";
 
 let myGameboard;
