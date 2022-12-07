@@ -1,16 +1,18 @@
-main{
+main {
   width: 850px;
   height: 400px;
   margin: 0 auto;
   display: block;
   display: flex;
 }
-#display { 
+#display {
   width: 400px;
   height: 100px;
   margin: 0 auto;
 }
-#player-board, #ai-board, #place-ship-board{
+#player-board,
+#ai-board,
+#place-ship-board {
   width: 400px;
   height: 400px;
   border: 1px solid black;
@@ -29,20 +31,21 @@ main{
   background-color: grey;
 }
 
-.hit{
+.anchored {
+  background-color: green;
+}
+
+.hit {
   background-color: red;
 }
 
-.anchored {
-  background-color: green !important; 
-}
-.dragover{
+.dragover {
   background-color: purple;
 }
-.removed{
+.removed {
   opacity: 0.2;
 }
-.outOfBounds{
+.outOfBounds {
   background-color: gray;
 }
 #board-creator {
@@ -59,13 +62,12 @@ main{
   grid-auto-flow: column;
   max-height: 40px;
   max-width: fit-content;
-
 }
-.block{
+.block {
   border: 1px solid black;
   width: 40px;
 }
-.hidden{
+.hidden {
   display: none;
 }
 
