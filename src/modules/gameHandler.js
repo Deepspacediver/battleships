@@ -122,7 +122,6 @@ const gameHandler = (playerName) => {
     const playerAttack = players.realPlayer.attack(players.AI, playerTarget);
     displayAttackResult(playerAttack, getTurn());
     markSquare(playerTarget, playerAttack, getTurn());
-    endGame();
     changeTurn();
   };
 
@@ -137,7 +136,6 @@ const gameHandler = (playerName) => {
 
     setTimeout(() => {
       displayAttackResult(AIAttack, getTurn());
-      endGame();
     }, 700);
 
     setTimeout(() => {
@@ -146,7 +144,7 @@ const gameHandler = (playerName) => {
     }, 850);
   };
 
-  const intializeAttack = (e) => {
+  const startAttack = (e) => {
     if (
       e.target.classList.contains("missed") ||
       e.target.classList.contains("hit") ||
@@ -155,29 +153,30 @@ const gameHandler = (playerName) => {
       players.realPlayer.board.areAllSunk()
     )
       return;
-
     playerMove(e);
     AIMove();
   };
 
-  const isGameOver = (turn) =>
-    turn === "realPlayer"
-      ? players.AI.board.areAllSunk()
-      : players.realPlayer.board.areAllSunk();
+  const isGameOver = () =>
+    players.AI.board.areAllSunk() || players.realPlayer.board.areAllSunk();
 
-  const endGame = () => {
+  const canEndGame = () => {
     // Implement modal to pop up instead of alter
-    if (isGameOver(getTurn())) {
-      alert(`${getTurn()} has won!`);
+    if (isGameOver()) {
+      if (players.AI.board.areAllSunk()) alert("You have won");
+      else alert("AI has won won");
     }
   };
 
   return {
-    intializeAttack,
+    startAttack,
     players,
     anchorAShip,
     canStartGame,
     isOutOfBounds,
+    canEndGame,
+    isGameOver,
+    getTurn,
   };
 };
 
