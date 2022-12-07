@@ -19,14 +19,23 @@ const gameHandler = (playerName) => {
   // Ship placement
   /* let illegalShipPlacements = new Set(); */
 
-  // Check if y axis is out of bounds
-  const isOutOfBounds = (coordinate, shipLength) =>
-    coordinate[1] + shipLength > 10;
+  // Check if y axis is out of bound
 
-  const generatePlacement = (coordinate, shipLength) => {
+  const isOutOfBounds = (coordinate, shipLength, alignment = "horizontal") =>
+    alignment === "horizontal"
+      ? coordinate[1] + shipLength > 10
+      : coordinate[0] + shipLength > 10;
+
+  const generatePlacement = (
+    coordinate,
+    shipLength,
+    alignment = "horizontal"
+  ) => {
     const shipPlacement = [];
     for (let i = 0; i < shipLength; i++) {
-      shipPlacement.push([coordinate[0], coordinate[1] + i]);
+      if (alignment === "horizontal")
+        shipPlacement.push([coordinate[0], coordinate[1] + i]);
+      else shipPlacement.push([coordinate[0] + i, coordinate[1]]);
     }
     return shipPlacement;
   };
@@ -51,8 +60,8 @@ const gameHandler = (playerName) => {
   };
 
   const anchorAShip = (chosenCoordinate, shipData) => {
-    if (isOutOfBounds(chosenCoordinate, shipData.length)) return;
-    const shipPlacement = generatePlacement(chosenCoordinate, shipData.length);
+    if (isOutOfBounds(chosenCoordinate, shipData.length, shipData.alignment)) return;
+    const shipPlacement = generatePlacement(chosenCoordinate, shipData.length, shipData.alignment);
     const playerBoard = players.realPlayer.board;
     if (
       isShipPlaced(shipData.name, playerBoard.shipList) ||

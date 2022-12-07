@@ -10,10 +10,10 @@ const createBoards = (coordinates) => {
     const square = document.createElement("div");
     square.classList.add("square");
     square.dataset.x = coordinate[0];
-    square.dataset.y = coordinate[1];/* 
+    square.dataset.y = coordinate[1];
     playerBoard.appendChild(square);
     let squareClone1 = square.cloneNode();
-    AIBoard.appendChild(squareClone1); */
+    AIBoard.appendChild(squareClone1); 
     let squareClone2 = square.cloneNode();
     boardForPlacement.appendChild(squareClone2);
 

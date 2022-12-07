@@ -7,7 +7,7 @@ const shipsContainer = document.getElementById("ships-container");
 const startBtn = document.querySelector("#start");
 const boardResetBtn = document.querySelector("#board-reset");
 const gameResetBtn = document.querySelector("#game-reset");
-
+const alignmentBtn = document.querySelector("#alignment-btn");
 
 let myGameHandler = gameHandler("test");
 myGameHandler.players.AI.board.placeShip(4, "battleship", [
@@ -18,18 +18,29 @@ myGameHandler.players.AI.board.placeShip(4, "battleship", [
 ]);
 
 const renderPlayerShips = () => {
-  const playerShips = myGameHandler.players.realPlayer.board.shipList
-  playerShips.forEach(shipObj => {
-    shipObj.coordinates.forEach(coord => {
-      const coordOnPlayerBoard = playerBoard.querySelector(`[data-x="${coord[0]}"][data-y="${coord[1]}"]`)
-      coordOnPlayerBoard.classList.add('anchored')
-    })
-  })
-}
+  const playerShips = myGameHandler.players.realPlayer.board.shipList;
+  playerShips.forEach((shipObj) => {
+    shipObj.coordinates.forEach((coord) => {
+      const coordOnPlayerBoard = playerBoard.querySelector(
+        `[data-x="${coord[0]}"][data-y="${coord[1]}"]`
+      );
+      coordOnPlayerBoard.classList.add("anchored");
+    });
+  });
+};
+
+alignmentBtn.addEventListener("click", () => {
+  let alignmentState = shipsContainer.firstElementChild.dataset.alignment;
+  if (alignmentState === "horizontal") alignmentState = "vertical";
+  else alignmentState = "horizontal";
+
+  const everyShip = Array.from(shipsContainer.children);
+  everyShip.forEach((ship) => (ship.dataset.alignment = alignmentState));
+});
 
 const attackingPhase = () => {
   AIBoard.classList.add("active");
-  renderPlayerShips()
+  renderPlayerShips();
   AIBoard.addEventListener("mousedown", (e) => {
     if (myGameHandler.isGameOver() || myGameHandler.getTurn() === "ai") return;
     console.log(e.target);
@@ -52,6 +63,7 @@ startBtn.addEventListener(
 shipsContainer.addEventListener("dragstart", (e) => {
   e.dataTransfer.setData("ship-length", e.target.dataset.length);
   e.dataTransfer.setData("ship-name", e.target.id);
+  e.dataTransfer.setData("ship-alignment", e.target.dataset.alignment);
 });
 
 boardForPlacement.addEventListener("dragover", (e) => {
@@ -84,7 +96,9 @@ boardForPlacement.addEventListener("drop", (e) => {
   const objectData = {
     length: Number(e.dataTransfer.getData("ship-length")),
     name: e.dataTransfer.getData("ship-name"),
+    alignment: e.dataTransfer.getData("ship-alignment"),
   };
+  console.log(objectData);
   const chosenCoordinate = [
     Number(e.target.dataset.x),
     Number(e.target.dataset.y),
