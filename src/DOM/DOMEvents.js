@@ -107,6 +107,7 @@ boardForPlacement.addEventListener("drop", (e) => {
   if (shipLocation) {
     addAnchoredClass(shipLocation);
     document.querySelector(`#${objectData.name}`).classList.add("removed");
+    console.log(myGameHandler.players.realPlayer.board.unavailableCoords)
   }
 });
 
