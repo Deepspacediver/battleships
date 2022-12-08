@@ -43,14 +43,6 @@ const gameHandler = (playerName) => {
   const isInAnArray = (array, element) =>
     array.some((el) => isEqual(el, element)); */
 
-  const isInIllegalCoords = (shipPlacement, illegalMoves) => {
-    // eslint-disable-next-line no-restricted-syntax
-    for (const placement of shipPlacement) {
-      if (illegalMoves.has(String(placement))) return true;
-    }
-    return false;
-  };
-
   const isShipPlaced = (name, shipList) => {
     // eslint-disable-next-line no-restricted-syntax
     for (const shipObject of shipList) {
@@ -60,12 +52,17 @@ const gameHandler = (playerName) => {
   };
 
   const anchorAShip = (chosenCoordinate, shipData) => {
-    if (isOutOfBounds(chosenCoordinate, shipData.length, shipData.alignment)) return;
-    const shipPlacement = generatePlacement(chosenCoordinate, shipData.length, shipData.alignment);
+    if (isOutOfBounds(chosenCoordinate, shipData.length, shipData.alignment))
+      return;
+    const shipPlacement = generatePlacement(
+      chosenCoordinate,
+      shipData.length,
+      shipData.alignment
+    );
     const playerBoard = players.realPlayer.board;
     if (
       isShipPlaced(shipData.name, playerBoard.shipList) ||
-      isInIllegalCoords(shipPlacement, playerBoard.unavailableCoords)
+      playerBoard.isInIllegalCoords(shipPlacement)
     )
       return;
 
