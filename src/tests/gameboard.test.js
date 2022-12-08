@@ -1,6 +1,6 @@
-import { illegalVariants } from "../gameHelpers/placement-helpers";
+/* import { illegalVariants } from "../gameHelpers/placement-helpers";
 import possibleAttacks from "../gameHelpers/AI-possible-attacks";
-import Gameboard from "../modules/gameboard";
+ */ import Gameboard from "../modules/gameboard";
 
 let myGameboard;
 let shipDescription = {
@@ -11,7 +11,11 @@ let shipDescription = {
 describe("creates and places ship in the shipList", () => {
   beforeAll(() => {
     myGameboard = Gameboard();
-    myGameboard.placeShip(shipDescription.length, shipDescription.name);
+    myGameboard.placeShip(shipDescription.length, shipDescription.name, [
+      [1, 2],
+      [1, 3],
+      [1, 4],
+    ]);
   });
 
   test("pushes object to shipList", () => {
@@ -27,15 +31,15 @@ describe("creates and places ship in the shipList", () => {
   });
 
   test("stores multiple ships", () => {
-    myGameboard.placeShip(3, "destroyer");
+    myGameboard.placeShip(3, "destroyer", [
+      [1, 2],
+      [1, 3],
+      [1, 4],
+    ]);
     myGameboard.shipList[1].ship.hit();
     myGameboard.shipList[1].ship.hit();
     myGameboard.shipList[1].ship.hit();
     expect(myGameboard.shipList[1].ship.isSunk()).toBe(true);
-  });
-
-  test("array coordinate is undefined", () => {
-    expect(myGameboard.shipList[0].coordinates).toBeUndefined();
   });
 });
 
@@ -69,7 +73,7 @@ describe("coordinations", () => {
 });
 
 describe("receiveAttack function", () => {
-  beforeEach(() => {
+  beforeAll(() => {
     myGameboard = Gameboard();
     myGameboard.placeShip(2, "destroyer", [
       [1, 2],
@@ -95,38 +99,31 @@ describe("receiveAttack function", () => {
 
   test("sinks battleship", () => {
     myGameboard.receiveAttack([5, 2]);
-    myGameboard.receiveAttack([5, 3]);
     myGameboard.receiveAttack([5, 4]);
     myGameboard.receiveAttack([5, 5]);
     expect(myGameboard.shipList[2].ship.isSunk()).toBe(true);
   });
-  
+
   test("returns hit:false sunk:false when missed", () => {
-    
     const resultOfAttack = myGameboard.receiveAttack([9, 9]);
-    expect(resultOfAttack.hit).toBe(false)
-    expect(resultOfAttack.sunk).toBe(false)
+    expect(resultOfAttack.hit).toBe(false);
+    expect(resultOfAttack.sunk).toBe(false);
   });
 
   test("returns hit:true sunk:false when player only hits the ship", () => {
-    myGameboard.receiveAttack([5, 2]);
-    myGameboard.receiveAttack([5, 3]);
-    const resultOfAttack = myGameboard.receiveAttack([5, 4])
-    expect(resultOfAttack.hit).toBe(true)
-    expect(resultOfAttack.sunk).toBe(false)
-  }); 
-
-  test("returns hit:true sunk:true and shipName when ship is sunk", () => {
-    myGameboard.receiveAttack([5, 2]);
-    myGameboard.receiveAttack([5, 3]);
-    myGameboard.receiveAttack([5, 5]);
-    const resultOfAttack = myGameboard.receiveAttack([5, 4])
-    expect(resultOfAttack.hit).toBe(true)
-    expect(resultOfAttack.sunk).toBe(true)
-    expect(resultOfAttack.name).toBe("battleship")
-
+    const resultOfAttack = myGameboard.receiveAttack([1, 2]);
+    expect(resultOfAttack.hit).toBe(true);
+    expect(resultOfAttack.sunk).toBe(false);
   });
 
+  test("returns hit:true sunk:true and shipName when ship is sunk", () => {
+    myGameboard.receiveAttack([3, 2]);
+    myGameboard.receiveAttack([3, 3]);
+    const resultOfAttack = myGameboard.receiveAttack([3, 4]);
+    expect(resultOfAttack.hit).toBe(true);
+    expect(resultOfAttack.sunk).toBe(true);
+    expect(resultOfAttack.name).toBe("submarine");
+  });
 
   test("adds missed shots to a set", () => {
     myGameboard.receiveAttack([9, 9]);
@@ -168,4 +165,50 @@ describe("areAllSunk testing", () => {
     expect(myGameboard.areAllSunk()).toBe(false);
   });
 });
- 
+
+describe("isInIllegalCords", () => {
+  beforeAll(() => {
+    myGameboard = Gameboard();
+    myGameboard.placeShip(2, "destroyer", [
+      [5, 2],
+      [5, 3],
+    ]);
+  });
+  test("returns true when set has at least one specified cords", () => {
+    expect(
+      myGameboard.isInIllegalCoords([
+        [0, 0],
+        [0, 1],
+        [5, 2],
+      ])
+    ).toBe(true);
+  });
+
+  test("returns false when coords are available", () => {
+    expect(
+      myGameboard.isInIllegalCoords([
+        [9, 4],
+        [9, 5],
+        [9, 6],
+      ])
+    ).toBe(false);
+  });
+});
+
+ describe("random ship placement", () => {
+  beforeAll(() => {
+    myGameboard = Gameboard();
+  });
+  test("places battleship ship in random place", () => {
+    myGameboard.randomlyPlaceShip();
+
+    expect(myGameboard.shipList[0].ship.getName()).toBe("battleship");
+    expect(myGameboard.shipList[0].coordinates).toBeInstanceOf(Array);
+    expect(myGameboard.shipList[0].coordinates).not.toEqual([
+      [5, 2],
+      [5, 3],
+      [5, 4],
+      [5, 5],
+    ]);
+  });
+});
