@@ -195,20 +195,21 @@ describe("isInIllegalCords", () => {
   });
 });
 
- describe("random ship placement", () => {
+describe("random ship placement", () => {
   beforeAll(() => {
     myGameboard = Gameboard();
+    myGameboard.randomlyPlaceShips();
   });
-  test("places battleship ship in random place", () => {
-    myGameboard.randomlyPlaceShip();
-
-    expect(myGameboard.shipList[0].ship.getName()).toBe("battleship");
-    expect(myGameboard.shipList[0].coordinates).toBeInstanceOf(Array);
-    expect(myGameboard.shipList[0].coordinates).not.toEqual([
-      [5, 2],
-      [5, 3],
-      [5, 4],
-      [5, 5],
-    ]);
+  test("places 5 ships in shiplist", () => {
+    expect(myGameboard.shipList.length).toBe(5);
+  });
+  test("randomly generated ships return appropriate name", () => {
+    expect([
+      "destroyer",
+      "submarine",
+      "cruiser",
+      "battleship",
+      "carrier",
+    ]).toContain(myGameboard.shipList[2].ship.getName());
   });
 });
