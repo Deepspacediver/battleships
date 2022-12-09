@@ -4,7 +4,6 @@ const playerBoard = document.getElementById("player-board");
 const AIBoard = document.getElementById("ai-board");
 const boardForPlacement = document.getElementById("place-ship-board");
 
-
 const createBoards = (coordinates) => {
   coordinates.forEach((coordinate) => {
     const square = document.createElement("div");
@@ -13,10 +12,9 @@ const createBoards = (coordinates) => {
     square.dataset.y = coordinate[1];
     playerBoard.appendChild(square);
     let squareClone1 = square.cloneNode();
-    AIBoard.appendChild(squareClone1); 
+    AIBoard.appendChild(squareClone1);
     let squareClone2 = square.cloneNode();
     boardForPlacement.appendChild(squareClone2);
-
   });
 };
 

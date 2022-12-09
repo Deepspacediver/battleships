@@ -10,12 +10,6 @@ const gameResetBtn = document.querySelector("#game-reset");
 const alignmentBtn = document.querySelector("#alignment-btn");
 
 let myGameHandler = gameHandler("test");
-myGameHandler.players.AI.board.placeShip(4, "battleship", [
-  [5, 2],
-  [5, 3],
-  [5, 4],
-  [5, 5],
-]);
 
 const renderPlayerShips = () => {
   const playerShips = myGameHandler.players.realPlayer.board.shipList;
@@ -41,6 +35,7 @@ alignmentBtn.addEventListener("click", () => {
 const attackingPhase = () => {
   AIBoard.classList.add("active");
   renderPlayerShips();
+  myGameHandler.players.AI.board.randomlyPlaceShips();
   AIBoard.addEventListener("mousedown", (e) => {
     if (myGameHandler.isGameOver() || myGameHandler.getTurn() === "ai") return;
     console.log(e.target);
@@ -107,7 +102,7 @@ boardForPlacement.addEventListener("drop", (e) => {
   if (shipLocation) {
     addAnchoredClass(shipLocation);
     document.querySelector(`#${objectData.name}`).classList.add("removed");
-    console.log(myGameHandler.players.realPlayer.board.unavailableCoords)
+    console.log(myGameHandler.players.realPlayer.board.unavailableCoords);
   }
 });
 

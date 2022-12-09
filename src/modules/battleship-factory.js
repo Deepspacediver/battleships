@@ -12,5 +12,4 @@ const Ship = (length, name) => {
   return { getLength, getName, hit, getHitsTaken, isSunk };
 };
 
-
 export default Ship;
