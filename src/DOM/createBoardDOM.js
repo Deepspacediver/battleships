@@ -11,9 +11,9 @@ const createBoards = (coordinates) => {
     square.dataset.x = coordinate[0];
     square.dataset.y = coordinate[1];
     playerBoard.appendChild(square);
-    let squareClone1 = square.cloneNode();
+    const squareClone1 = square.cloneNode();
     AIBoard.appendChild(squareClone1);
-    let squareClone2 = square.cloneNode();
+    const squareClone2 = square.cloneNode();
     boardForPlacement.appendChild(squareClone2);
   });
 };
