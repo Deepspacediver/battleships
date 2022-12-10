@@ -37,7 +37,12 @@ const attackingPhase = () => {
   renderPlayerShips();
   myGameHandler.players.AI.board.randomlyPlaceShips();
   AIBoard.addEventListener("mousedown", (e) => {
-    if (myGameHandler.isGameOver() || myGameHandler.getTurn() === "ai") return;
+    if (
+      myGameHandler.isGameOver() ||
+      myGameHandler.getTurn() === "ai" ||
+      !e.target.classList.contains("square")
+    )
+      return;
     console.log(e.target);
     myGameHandler.startAttack(e);
     myGameHandler.canEndGame();
@@ -56,7 +61,7 @@ startBtn.addEventListener(
 );
 
 shipsContainer.addEventListener("dragstart", (e) => {
-  console.log(e)
+  console.log(e);
   if (e.target.classList.contains("ship")) {
     e.dataTransfer.setData("ship-length", e.target.dataset.length);
     e.dataTransfer.setData("ship-name", e.target.id);
