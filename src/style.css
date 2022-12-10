@@ -1,3 +1,6 @@
+*{
+  user-select:none;
+}
 main {
   width: 850px;
   height: 400px;
@@ -71,6 +74,3 @@ main {
   display: none;
 }
 
-#place-ship-board .square:-moz-drag-over {
-  background-color: purple;
-}

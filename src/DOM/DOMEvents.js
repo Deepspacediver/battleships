@@ -56,9 +56,12 @@ startBtn.addEventListener(
 );
 
 shipsContainer.addEventListener("dragstart", (e) => {
-  e.dataTransfer.setData("ship-length", e.target.dataset.length);
-  e.dataTransfer.setData("ship-name", e.target.id);
-  e.dataTransfer.setData("ship-alignment", e.target.dataset.alignment);
+  console.log(e)
+  if (e.target.classList.contains("ship")) {
+    e.dataTransfer.setData("ship-length", e.target.dataset.length);
+    e.dataTransfer.setData("ship-name", e.target.id);
+    e.dataTransfer.setData("ship-alignment", e.target.dataset.alignment);
+  }
 });
 
 boardForPlacement.addEventListener("dragover", (e) => {
