@@ -51,13 +51,13 @@ const attackingPhase = () => {
 };
 
 startBtn.addEventListener(
+  // If clicked before playable, prevents from furthr playing
   "click",
   () => {
     if (myGameHandler.canStartGame()) {
       attackingPhase();
     }
-  },
-  { once: true }
+  }
 );
 
 shipsContainer.addEventListener("dragstart", (e) => {
@@ -106,6 +106,7 @@ boardForPlacement.addEventListener("drop", (e) => {
     Number(e.target.dataset.x),
     Number(e.target.dataset.y),
   ];
+
   const shipLocation = myGameHandler.anchorAShip(chosenCoordinate, objectData);
   if (shipLocation) {
     addAnchoredClass(shipLocation);
@@ -121,6 +122,7 @@ const classRemoval = (className, container = document) => {
   elementsToClear.forEach((element) => element.classList.remove(className));
 };
 
+      /* <!!!!!!!!!! Game Reset !!!!!!!!!!!> */
 const resetBoard = () => {
   myGameHandler = gameHandler("test");
   classRemoval("anchored");
@@ -131,32 +133,10 @@ boardResetBtn.addEventListener("click", () => {
   resetBoard();
 });
 
-/* <!!!!!!!!!! Full Game Reset !!!!!!!!!!!> */
 
-const startAttackingPhase = () => {
-  AIBoard.classList.add("active");
-  startBtn.addEventListener(
-    "click",
-    () => {
-      console.log(myGameHandler.canStartGame());
-      if (myGameHandler.canStartGame()) {
-        attackingPhase();
-      }
-    },
-    { once: true }
-  );
-};
 
 gameResetBtn.addEventListener("click", () => {
   resetBoard();
   classRemoval("hit");
   classRemoval("missed");
-
-  myGameHandler.players.AI.board.placeShip(4, "battleship", [
-    [5, 2],
-    [5, 3],
-    [5, 4],
-    [5, 5],
-  ]);
-  startAttackingPhase();
 });
