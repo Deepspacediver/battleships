@@ -1,12 +1,29 @@
+@font-face {
+  font-family: "Norwester";
+  src: url("~./assets/fonts/norwester.woff2") format("woff2"),
+    url("./assets/fonts/norwester.woff") format("woff");
+}
+@font-face {
+  font-family: "ArmaliteRifle";
+  src: url("./assets/fonts/armalite_rifle.woff2") format("woff2"),
+    url("./assets/fonts/armalite_rifle.woff") format("woff");
+}
+
 :root {
   --primary: #0e4b6c;
   --secondary: #0a0a0a;
   --tertiary: #155684;
   --anchored: #48bf91;
   --hit: #e03333;
+  font-family: "Norwester", sans-serif;
 }
 body {
-  background-color: #2e2e2e;
+  background-image: linear-gradient(
+    to right,
+    #161616 10%,
+    #2e2e2e,
+    #161616 90%
+  );
 }
 * {
   user-select: none;
