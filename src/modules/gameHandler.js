@@ -1,13 +1,11 @@
-import isEqual from "lodash.isequal";
 import Player from "./player-factory";
 import possibleAttacks, {
   getValidAttack,
 } from "../gameHelpers/AI-possible-attacks";
-import { illegalVariants } from "../gameHelpers/placement-helpers";
 
 const playerBoardDOM = document.getElementById("player-board");
 const AIBoardDOM = document.getElementById("ai-board");
-const resultDisplay = document.getElementById("display");
+const turnDisplay = document.getElementById("turn-display");
 
 const gameHandler = (playerName) => {
   let playerTurn = "realPlayer";
@@ -77,7 +75,9 @@ const gameHandler = (playerName) => {
 
   // Game loop
   const AIPossibleAttacks = possibleAttacks;
+
   const getTurn = () => playerTurn;
+
   const changeTurn = () => {
     if (playerTurn === "realPlayer") playerTurn = "ai";
     else playerTurn = "realPlayer";
@@ -89,21 +89,11 @@ const gameHandler = (playerName) => {
     Number(target.dataset.y),
   ];
 
-  const displayAttackResult = ({ hit, sunk, name }, turn) => {
+  const displayWhoseTurn = (turn) => {
     const whoseTurn = turn;
-    console.log("?", whoseTurn);
     if (whoseTurn === "realPlayer") {
-      if (hit === false) resultDisplay.textContent = "Your shot missed";
-      else if (hit === true && sunk === false)
-        resultDisplay.textContent = "Your shot was a hit!";
-      else if (hit === true && sunk === true)
-        resultDisplay.textContent = `You sunk enemy's ${name}!`;
-    } else if (whoseTurn === "ai") {
-      if (hit === false) resultDisplay.textContent = "Computer's shot missed";
-      else if (hit === true && sunk === false)
-        resultDisplay.textContent = "Computer hit one of your ships!";
-      else resultDisplay.textContent = `Computer sunk your ${name}!`;
-    }
+      turnDisplay.textContent = "computer's turn";
+    } else turnDisplay.textContent = "player's turn";
   };
 
   const markSquare = (coordinate, { hit }, turn) => {
@@ -126,7 +116,7 @@ const gameHandler = (playerName) => {
     AIBoardDOM.classList.remove("active");
     const playerTarget = convertToCoordinate(event.target);
     const playerAttack = players.realPlayer.attack(players.AI, playerTarget);
-    displayAttackResult(playerAttack, getTurn());
+    displayWhoseTurn(getTurn());
     markSquare(playerTarget, playerAttack, getTurn());
     changeTurn();
   };
@@ -141,13 +131,13 @@ const gameHandler = (playerName) => {
     }, 500);
 
     setTimeout(() => {
-      displayAttackResult(AIAttack, getTurn());
+      displayWhoseTurn(getTurn());
     }, 700);
 
     setTimeout(() => {
       changeTurn();
       AIBoardDOM.classList.add("active");
-    }, 850);
+    }, 800);
   };
 
   const startAttack = (e) => {
