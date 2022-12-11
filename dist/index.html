@@ -1,33 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-<body>
-  <section id="board-creator">
-  <div id="place-ship-board"></div>
-  <div id="ships-container">
-    <div id="destroyer" class="ship" data-length="2"></div>
-    <div id="submarine" class="ship" data-length="3"></div>
-    <div id="cruiser" class="ship" data-length="3"></div>
-    <div id="battleship" class="ship" data-length="4"></div>
-    <div id="carrier" class="ship" data-length="5"></div>
-  </div>
-  <div class="buttons">
-    <button id="alignment-btn">Change Alignment</button>
-    <button id="start">Start Game</button>
-    <button id="board-reset">Reset Board</button>
-  </div>
-</section>
-    <div id="turn-display"></div>
-    <main>
-    <div id="player-board"></div>
-    <div id="ai-board"></div>
-    <button id="game-reset">Reset Game</button>
-  </main>
-  <script defer src="main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header class="hidden">
+      <h1>Battleship</h1>
+      <ul>
+        <li>DeepSpaceDiver</li>
+        <li>GitLogo</li>
+      </ul>
+    </header>
+
+    <main class>
+      <div id="turn-display"></div>
+      <div id="player-board"></div>
+      <div id="ai-board"></div>
+    </main>
+
+    <div class="modal" id="board-creator">
+      <h2 class="board-creator-header">Place your fleet</h2>
+      <div id="place-ship-board"></div>
+      <div id="ships-container">
+        <div id="destroyer" class="ship" data-length="2"></div>
+        <div id="submarine" class="ship" data-length="3"></div>
+        <div id="cruiser" class="ship" data-length="3"></div>
+        <div id="battleship" class="ship" data-length="4"></div>
+        <div id="carrier" class="ship" data-length="5"></div>
+      </div>
+      <div class="buttons">
+        <button id="start">Start Game</button>
+        <button id="board-reset">Reset Board</button>
+        <button id="alignment-btn">Change Alignment</button>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="gameover-display">
+      <h3 id="gameover-result">You won</h3>
+      <button id="game-reset">Play Again</button>
+    </div>
+
+    <div id="overlay"></div>
+    <footer></footer>
+    <script defer src="main.js"></script>
+  </body>
 </html>
