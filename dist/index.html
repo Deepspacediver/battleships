@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Battleship</title>
   </head>
   <body>
     <header class="hidden">
@@ -21,7 +21,7 @@
       <div id="ai-board"></div>
     </main>
 
-    <div class="modal" id="board-creator">
+    <div class="modal active" id="board-creator">
       <h2 class="board-creator-header">Place your fleet</h2>
       <div id="place-ship-board"></div>
       <div id="ships-container">
@@ -43,7 +43,7 @@
       <button id="game-reset">Play Again</button>
     </div>
 
-    <div id="overlay"></div>
+    <div id="overlay" class="active"></div>
     <footer></footer>
     <script defer src="main.js"></script>
   </body>
