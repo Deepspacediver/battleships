@@ -8,6 +8,8 @@ const startBtn = document.querySelector("#start");
 const boardResetBtn = document.querySelector("#board-reset");
 const gameResetBtn = document.querySelector("#game-reset");
 const alignmentBtn = document.querySelector("#alignment-btn");
+const overlay = document.querySelector("#overlay");
+const boardModal = document.querySelector("#board-creator");
 
 let myGameHandler = gameHandler("test");
 
@@ -42,6 +44,8 @@ alignmentBtn.addEventListener("click", () => {
 });
 
 const attackingPhase = () => {
+  boardModal.classList.remove('active')
+  overlay.classList.remove('active')
   AIBoard.classList.add("active");
   renderPlayerShips();
   myGameHandler.players.AI.board.randomlyPlaceShips();
