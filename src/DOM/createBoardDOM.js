@@ -20,5 +20,3 @@ const createBoards = (coordinates) => {
 
 createBoards(possibleAttacks);
 
-/*
- */
