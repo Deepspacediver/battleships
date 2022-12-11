@@ -25,11 +25,20 @@ const renderPlayerShips = () => {
 
 alignmentBtn.addEventListener("click", () => {
   let alignmentState = shipsContainer.firstElementChild.dataset.alignment;
-  if (alignmentState === "horizontal") alignmentState = "vertical";
-  else alignmentState = "horizontal";
-
   const everyShip = Array.from(shipsContainer.children);
-  everyShip.forEach((ship) => (ship.dataset.alignment = alignmentState));
+  if (alignmentState === "horizontal") {
+    alignmentState = "vertical";
+    everyShip.forEach((ship) => {
+      ship.dataset.alignment = alignmentState;
+      ship.classList.add("vertical");
+    });
+  } else {
+    everyShip.forEach((ship) => {
+      alignmentState = "horizontal";
+      ship.dataset.alignment = alignmentState;
+      ship.classList.remove("vertical");
+    });
+  }
 });
 
 const attackingPhase = () => {
@@ -122,7 +131,7 @@ const classRemoval = (className, container = document) => {
   elementsToClear.forEach((element) => element.classList.remove(className));
 };
 
-      /* <!!!!!!!!!! Game Reset !!!!!!!!!!!> */
+/* <!!!!!!!!!! Game Reset !!!!!!!!!!!> */
 const resetBoard = () => {
   myGameHandler = gameHandler("test");
   classRemoval("anchored");
@@ -132,8 +141,6 @@ const resetBoard = () => {
 boardResetBtn.addEventListener("click", () => {
   resetBoard();
 });
-
-
 
 gameResetBtn.addEventListener("click", () => {
   resetBoard();
