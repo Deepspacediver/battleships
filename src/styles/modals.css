@@ -10,13 +10,32 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0);
-  transition: transform 150ms ease-in-out;
+  transition: transform 150ms ease-out;
   background-color: var(--secondary);
   z-index: 10;
   border: 5px solid var(--secondary);
   border-radius: 2rem;
 }
+.modal.active {
+  transform: translate(-50%, -50%) scale(1);
+}
 
+#overlay {
+  position: fixed;
+  opacity: 0; 
+  transition: opactiy 150ms ease-out;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .8);
+  pointer-events: none;
+}
+
+#overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
 /*       SHIP FACTORY             */
 #board-creator.modal {
   max-width: 90%;
