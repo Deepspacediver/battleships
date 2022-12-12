@@ -43,9 +43,17 @@ alignmentBtn.addEventListener("click", () => {
   }
 });
 
+const canEndGame = () => {
+  // Implement modal to pop up instead of alter
+  if (myGameHandler.isGameOver()) {
+    if (myGameHandler.players.AI.board.areAllSunk()) alert("You have won");
+    else alert("AI has won won");
+  }
+};
+
 const attackingPhase = () => {
-  boardModal.classList.remove('active')
-  overlay.classList.remove('active')
+  boardModal.classList.remove("active");
+  overlay.classList.remove("active");
   AIBoard.classList.add("active");
   renderPlayerShips();
   myGameHandler.players.AI.board.randomlyPlaceShips();

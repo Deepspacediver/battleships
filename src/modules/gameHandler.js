@@ -6,7 +6,6 @@ import possibleAttacks, {
 const playerBoardDOM = document.getElementById("player-board");
 const AIBoardDOM = document.getElementById("ai-board");
 const turnDisplay = document.getElementById("turn-display");
-
 const gameHandler = (playerName) => {
   let playerTurn = "realPlayer";
   const players = {
@@ -156,21 +155,12 @@ const gameHandler = (playerName) => {
   const isGameOver = () =>
     players.AI.board.areAllSunk() || players.realPlayer.board.areAllSunk();
 
-  const canEndGame = () => {
-    // Implement modal to pop up instead of alter
-    if (isGameOver()) {
-      if (players.AI.board.areAllSunk()) alert("You have won");
-      else alert("AI has won won");
-    }
-  };
-
   return {
     startAttack,
     players,
     anchorAShip,
     canStartGame,
     isOutOfBounds,
-    canEndGame,
     isGameOver,
     getTurn,
   };
