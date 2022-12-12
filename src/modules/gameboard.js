@@ -67,19 +67,19 @@ const Gameboard = () => {
         return {
           hit: true,
           sunk: true,
-          name: shipInList.ship.getName(),
+          coords: shipInList.coordinates,
         };
       return {
         hit: true,
         sunk: false,
-        name: null,
+        coords: null,
       };
     }
     missedShots.add(String(coordinate));
     return {
       hit: false,
       sunk: false,
-      name: null,
+      coords: null,
     };
   };
 

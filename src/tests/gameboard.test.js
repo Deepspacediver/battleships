@@ -122,7 +122,7 @@ describe("receiveAttack function", () => {
     const resultOfAttack = myGameboard.receiveAttack([3, 4]);
     expect(resultOfAttack.hit).toBe(true);
     expect(resultOfAttack.sunk).toBe(true);
-    expect(resultOfAttack.name).toBe("submarine");
+    expect(resultOfAttack.coords).toBeInstanceOf(Array);
   });
 
   test("adds missed shots to a set", () => {
