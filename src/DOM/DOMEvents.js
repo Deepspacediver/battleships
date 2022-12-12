@@ -9,7 +9,10 @@ const boardResetBtn = document.querySelector("#board-reset");
 const gameResetBtn = document.querySelector("#game-reset");
 const alignmentBtn = document.querySelector("#alignment-btn");
 const overlay = document.querySelector("#overlay");
+
 const boardModal = document.querySelector("#board-creator");
+const gameoverDisplay = document.querySelector("#gameover-display");
+const gameoverResult = document.querySelector("#gameover-result");
 
 let myGameHandler = gameHandler("test");
 
@@ -46,8 +49,12 @@ alignmentBtn.addEventListener("click", () => {
 const canEndGame = () => {
   // Implement modal to pop up instead of alter
   if (myGameHandler.isGameOver()) {
-    if (myGameHandler.players.AI.board.areAllSunk()) alert("You have won");
-    else alert("AI has won won");
+    if (myGameHandler.players.AI.board.areAllSunk())
+      gameoverResult.textContent = "You have won";
+    else gameoverResult.textContent = "AI has won won";
+
+    gameoverDisplay.classList.add("active");
+    overlay.classList.add("active");
   }
 };
 
@@ -66,7 +73,7 @@ const attackingPhase = () => {
       return;
     console.log(e.target);
     myGameHandler.startAttack(e);
-    myGameHandler.canEndGame();
+    canEndGame();
     console.log(myGameHandler.players.realPlayer.board.shipList);
   });
 };
@@ -158,4 +165,6 @@ gameResetBtn.addEventListener("click", () => {
   resetBoard();
   classRemoval("hit");
   classRemoval("missed");
+  gameoverDisplay.classList.remove("active");
+  boardModal.classList.add("active");
 });
