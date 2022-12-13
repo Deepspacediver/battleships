@@ -1,12 +1,12 @@
 @font-face {
   font-family: "Norwester";
-  src: url("~./assets/fonts/norwester.woff2") format("woff2"),
-    url("./assets/fonts/norwester.woff") format("woff");
+  src: url("../assets/fonts/norwester.woff2") format("woff2"),
+    url("../assets/fonts/norwester.woff") format("woff");
 }
 @font-face {
   font-family: "ArmaliteRifle";
-  src: url("./assets/fonts/armalite_rifle.woff2") format("woff2"),
-    url("./assets/fonts/armalite_rifle.woff") format("woff");
+  src: url("../assets/fonts/armalite_rifle.woff2") format("woff2"),
+    url("../assets/fonts/armalite_rifle.woff") format("woff");
 }
 
 :root {
