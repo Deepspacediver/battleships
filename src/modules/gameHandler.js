@@ -95,7 +95,20 @@ const gameHandler = (playerName) => {
     } else turnDisplay.textContent = "player's turn";
   };
 
-  const markSquare = (coordinate, { hit }, turn) => {
+  const markSunk = (coords, turn) => {
+    let boardToMark;
+    if (turn === "realPlayer") boardToMark = AIBoardDOM;
+    else boardToMark = playerBoardDOM;
+
+    coords.forEach((coord) => {
+      const hitSquare = boardToMark.querySelector(
+        `[data-x="${coord[0]}"][data-y="${coord[1]}"]`
+      );
+      hitSquare.classList.add("sunk");
+    });
+  };
+
+  const markSquare = (coordinate, { hit, sunk, coords }, turn) => {
     let target;
     if (turn === "realPlayer") {
       target = AIBoardDOM.querySelector(
@@ -115,22 +128,26 @@ const gameHandler = (playerName) => {
     AIBoardDOM.classList.remove("active");
     const playerTarget = convertToCoordinate(event.target);
     const playerAttack = players.realPlayer.attack(players.AI, playerTarget);
-    displayWhoseTurn(getTurn());
-    markSquare(playerTarget, playerAttack, getTurn());
+    const currentTurn = getTurn();
+    displayWhoseTurn(currentTurn);
+    markSquare(playerTarget, playerAttack, currentTurn);
+    if (playerAttack.sunk === true) markSunk(playerAttack.coords, currentTurn);
     changeTurn();
   };
 
   const AIMove = () => {
     if (players.AI.board.areAllSunk()) return;
+    const currentTurn = getTurn();
     const AITarget = getValidAttack(AIPossibleAttacks);
     const AIAttack = players.AI.attack(players.realPlayer, AITarget);
 
     setTimeout(() => {
-      markSquare(AITarget, AIAttack, getTurn());
+      markSquare(AITarget, AIAttack, currentTurn);
+      if (AIAttack.sunk === true) markSunk(AIAttack.coords, currentTurn);
     }, 500);
 
     setTimeout(() => {
-      displayWhoseTurn(getTurn());
+      displayWhoseTurn(currentTurn);
     }, 700);
 
     setTimeout(() => {
