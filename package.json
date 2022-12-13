@@ -39,6 +39,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "clean-webpack-plugin": "^4.0.0",
     "eslint-plugin-jest": "^27.1.6",
     "lodash.isequal": "^4.5.0"
   }
