@@ -50,8 +50,8 @@ const canEndGame = () => {
   // Implement modal to pop up instead of alter
   if (myGameHandler.isGameOver()) {
     if (myGameHandler.players.AI.board.areAllSunk())
-      gameoverResult.textContent = "You have won";
-    else gameoverResult.textContent = "AI has won won";
+      gameoverResult.textContent = "You won";
+    else gameoverResult.textContent = "AI won";
 
     gameoverDisplay.classList.add("active");
     overlay.classList.add("active");
@@ -165,6 +165,7 @@ gameResetBtn.addEventListener("click", () => {
   resetBoard();
   classRemoval("hit");
   classRemoval("missed");
+  classRemoval("sunk");
   gameoverDisplay.classList.remove("active");
   boardModal.classList.add("active");
 });
