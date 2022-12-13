@@ -71,10 +71,8 @@ const attackingPhase = () => {
       !e.target.classList.contains("square")
     )
       return;
-    console.log(e.target);
     myGameHandler.startAttack(e);
     canEndGame();
-    console.log(myGameHandler.players.realPlayer.board.shipList);
   });
 };
 
@@ -89,7 +87,6 @@ startBtn.addEventListener(
 );
 
 shipsContainer.addEventListener("dragstart", (e) => {
-  console.log(e);
   if (e.target.classList.contains("ship")) {
     e.dataTransfer.setData("ship-length", e.target.dataset.length);
     e.dataTransfer.setData("ship-name", e.target.id);
@@ -129,7 +126,6 @@ boardForPlacement.addEventListener("drop", (e) => {
     name: e.dataTransfer.getData("ship-name"),
     alignment: e.dataTransfer.getData("ship-alignment"),
   };
-  console.log(objectData);
   const chosenCoordinate = [
     Number(e.target.dataset.x),
     Number(e.target.dataset.y),
@@ -139,7 +135,6 @@ boardForPlacement.addEventListener("drop", (e) => {
   if (shipLocation) {
     addAnchoredClass(shipLocation);
     document.querySelector(`#${objectData.name}`).classList.add("removed");
-    console.log(myGameHandler.players.realPlayer.board.unavailableCoords);
   }
 });
 

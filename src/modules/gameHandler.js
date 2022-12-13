@@ -64,7 +64,6 @@ const gameHandler = (playerName) => {
       return;
 
     playerBoard.placeShip(shipData.length, shipData.name, shipPlacement);
-    console.log(playerBoard.shipList);
     return shipPlacement;
   };
 
