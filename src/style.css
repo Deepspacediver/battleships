@@ -125,6 +125,7 @@ button {
 .square {
   border: 2px solid var(--secondary);
   background-color: var(--tertiary);
+  position: relative;
 }
 .active > .square:hover {
   background-color: #48bf91;
@@ -143,7 +144,15 @@ button {
   background-color: #e03333;
   pointer-events: none;
 }
-
+.sunk::after{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  content: "X";
+  font-size: 2rem;
+  color: var(--secondary);
+}
 .dragover {
   background-color: #48bf91;
 }
